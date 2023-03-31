@@ -6,12 +6,13 @@
 ; repo for my edited version: 
 
 ; The shortcuts:
-;   F13  : Drag to move a window.
+;   F13 : Drag to move a window.
 ;   F14 : Drag to resize a window.
-;   Double-F13   : Minimize a window.
+;
+;   Double-F13 : Minimize a window.
 ;   (disabled by default)
 ;
-;   Double-F14  : Maximize/Restore a window.
+;   Double-F14 : Maximize/Restore a window.
 ;   (disabled by default)
 ;
 
@@ -109,23 +110,25 @@ F14::
   }
 }
 
-!F14::
-{
-  if (A_PriorHotkey = "!F14" and A_TimeSincePriorHotkey < 400)
-    {
-      MouseGetPos ,, &KDE_id
-      ; Toggle between maximized and restored state.
-      if WinGetMinMax(KDE_id)
-      {
-        WinRestore KDE_id
-      }
-      else
-      {
-        WinMaximize KDE_id
-      }
-      return
-    }
-}
+; uncomment to add maximize/restore toggle on holding Alt and double clicking
+; vvvvv
+; !F14::
+; {
+;   if (A_PriorHotkey = "!F14" and A_TimeSincePriorHotkey < 400)
+;     {
+;       MouseGetPos ,, &KDE_id
+;       ; Toggle between maximized and restored state.
+;       if WinGetMinMax(KDE_id)
+;       {
+;         WinRestore KDE_id
+;       }
+;       else
+;       {
+;         WinMaximize KDE_id
+;       }
+;       return
+;     }
+; }
 
 isFullScreen()
 {
