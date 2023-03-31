@@ -61,6 +61,7 @@ F13::
 ;     PostMessage 0x0112, 0xf020,,, KDE_id
 ;     return
 ;   }
+;   KeyWait "F13"
 ; }
 
 
@@ -128,6 +129,7 @@ F14::
 ;       }
 ;       return
 ;     }
+;     KeyWait "F14"
 ; }
 
 isFullScreen()
