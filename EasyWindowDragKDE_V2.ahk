@@ -21,24 +21,11 @@
 SetWinDelay 2
 CoordMode "Mouse"
 
+; dragging stuff
+; vvvvv
+
 F13::
 {
-  ; this is here to prevent minimizing hovered window on release
-  ; only happens on maximized windows :shrug:
-  ;        vvv
-  ; KeyWait "F13"
-  ; ^^^
-  ; uncomment above and below to add minimize functionality
-  ; vvv
-  ; if (A_PriorHotkey = "F13" and A_TimeSincePriorHotkey < 400)
-  ;   {
-  ;     KeyWait "F13"
-  ;     MouseGetPos ,, &KDE_id
-  ;     ; This message is mostly equivalent to WinMinimize,
-  ;     ; but it avoids a bug with PSPad.
-  ;     PostMessage 0x0112, 0xf020,,, KDE_id
-  ;     return
-  ;   }
   ; Get the initial mouse position and window id, and
   ; abort if the window is maximized.
   MouseGetPos &KDE_X1, &KDE_Y1, &KDE_id
@@ -61,25 +48,26 @@ F13::
   }
 }
 
+; uncomment to add minimize toggle on holding Alt and double clicking
+; vvvvv
+; !F13::
+; {
+;   if (A_PriorHotkey = "!F13" and A_TimeSincePriorHotkey < 400)
+;   {
+;     MouseGetPos ,, &KDE_id
+;     ; This message is mostly equivalent to WinMinimize,
+;     ; but it avoids a bug with PSPad.
+;     PostMessage 0x0112, 0xf020,,, KDE_id
+;     return
+;   }
+; }
+
+
+; resizing stuff
+; vvvvv
+
 F14::
 {
-  ; uncomment below if statement to add maximize/restore toggle on double click
-
-  ; this is here to prevent rapid maximizing/restoring
-  ; when holding down the resize key
-  ;        vvv
-  KeyWait "F14"
-
-  if (A_PriorHotkey = "F14" and A_TimeSincePriorHotkey < 400)
-  {
-    MouseGetPos ,, &KDE_id
-    ; Toggle between maximized and restored state.
-    if WinGetMinMax(KDE_id)
-      WinRestore KDE_id
-    Else
-      WinMaximize KDE_id
-    return
-  }
   ; Get the initial mouse position and window id, and
   ; abort if the window is maximized.
   MouseGetPos &KDE_X1, &KDE_Y1, &KDE_id
@@ -102,7 +90,9 @@ F14::
   Loop
   {
     if !GetKeyState("F14", "P") ; Break if button has been released.
+    {
       break
+    }
     MouseGetPos &KDE_X2, &KDE_Y2 ; Get the current mouse position.
     ; Get the current window position and size.
     WinGetPos &KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id
@@ -117,6 +107,24 @@ F14::
     KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
     KDE_Y1 := (KDE_Y2 + KDE_Y1)
   }
+}
+
+!F14::
+{
+  if (A_PriorHotkey = "!F14" and A_TimeSincePriorHotkey < 400)
+    {
+      MouseGetPos ,, &KDE_id
+      ; Toggle between maximized and restored state.
+      if WinGetMinMax(KDE_id)
+      {
+        WinRestore KDE_id
+      }
+      else
+      {
+        WinMaximize KDE_id
+      }
+      return
+    }
 }
 
 isFullScreen()
