@@ -3,7 +3,7 @@
 
 ; this script has been edited, by tsukiongithub, to use the F13 and F14 keys instead of Alt + LButton and Alt + RButton, respectively
 ; original v2 script: https://www.autohotkey.com/docs/v2/scripts/index.htm#EasyWindowDrag_(KDE)
-; repo for my edited version: 
+; repo for my edited version: https://github.com/tsukiongithub/easy-window-dragging
 
 ; The shortcuts:
 ;   F13 : Drag to move a window.
@@ -113,24 +113,24 @@ F14::
 
 ; uncomment to add maximize/restore toggle on holding Alt and double clicking
 ; vvvvv
-; !F14::
-; {
-;   if (A_PriorHotkey = "!F14" and A_TimeSincePriorHotkey < 400)
-;     {
-;       MouseGetPos ,, &KDE_id
-;       ; Toggle between maximized and restored state.
-;       if WinGetMinMax(KDE_id)
-;       {
-;         WinRestore KDE_id
-;       }
-;       else
-;       {
-;         WinMaximize KDE_id
-;       }
-;       return
-;     }
-;     KeyWait "F14"
-; }
+!F14::
+{
+  if (A_PriorHotkey = "!F14" and A_TimeSincePriorHotkey < 400)
+    {
+      MouseGetPos ,, &KDE_id
+      ; Toggle between maximized and restored state.
+      if WinGetMinMax(KDE_id)
+      {
+        WinRestore KDE_id
+      }
+      else
+      {
+        WinMaximize KDE_id
+      }
+      return
+    }
+    KeyWait "F14"
+}
 
 isFullScreen()
 {
